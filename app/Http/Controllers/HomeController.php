@@ -64,26 +64,41 @@ class HomeController extends Controller
     public function show(){
         return view('pages.home');
     }
-    public function search(Request $request){
+    public function search(Request $request)
+    {
         $category_post = CatePost::orderBy('cate_post_id','desc')->get();
         $keywords = $request->keywords_submit;
+
         $slider = Slider::orderBy('slider_id','desc')->where('slider_status','1')->take(4)->get();
         $meta_desc = "Laptop Minh Quân - Trang web mua sắm hàng đầu Việt Nam";
         $meta_keywords = "Laptop Minh Quân, mua hàng online, mua hàng trực tuyến";
         $meta_title = "Tìm kiếm - Laptop Minh Quân";
         $url_canonical = $request->url();
+
         $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','1')->orderby('brand_id','desc')->get();
-        $search_product = DB::table('tbl_product')->where('product_name','like','%'.$keywords.'%')->get();
+
+        // Truy vấn sản phẩm theo tên sản phẩm, tên danh mục, hoặc tên thương hiệu
+        $search_product = DB::table('tbl_product')
+            ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id')
+            ->join('tbl_brand_product', 'tbl_brand_product.brand_id', '=', 'tbl_product.brand_id')
+            ->where(function ($query) use ($keywords) {
+                $query->where('tbl_product.product_name', 'like', '%' . $keywords . '%')
+                    ->orWhere('tbl_category_product.category_name', 'like', '%' . $keywords . '%')
+                    ->orWhere('tbl_brand_product.brand_name', 'like', '%' . $keywords . '%');
+            })
+            ->select('tbl_product.*') // chỉ lấy dữ liệu sản phẩm
+            ->get();
+
         return view('pages.sanpham.search')
-        ->with('category',$cate_product)
-        ->with('brand',$brand_product)
-        ->with('search_product',$search_product)
-        ->with('meta_desc',$meta_desc)
-        ->with('meta_keywords',$meta_keywords)
-        ->with('meta_title',$meta_title)
-        ->with('url_canonical',$url_canonical)
-        ->with('slider', $slider)
-        ->with('category_post', $category_post);
+            ->with('category', $cate_product)
+            ->with('brand', $brand_product)
+            ->with('search_product', $search_product)
+            ->with('meta_desc', $meta_desc)
+            ->with('meta_keywords', $meta_keywords)
+            ->with('meta_title', $meta_title)
+            ->with('url_canonical', $url_canonical)
+            ->with('slider', $slider)
+            ->with('category_post', $category_post);
     }
 }
