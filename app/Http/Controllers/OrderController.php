@@ -247,7 +247,7 @@ class OrderController extends Controller
             }
         }
     
-        return view('admin.view_order')->with(compact(
+        return view('admin.order.view_order')->with(compact(
             'order',
             'customer',
             'shipping',
@@ -260,7 +260,7 @@ class OrderController extends Controller
     }
     public function manage_order(){
         $order = Order::orderBy('created_at', 'DESC')->get();
-        return view('admin.manage_order')->with(compact('order'));
+        return view('admin.order.manage_order')->with(compact('order'));
     }
 
 

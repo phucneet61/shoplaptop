@@ -45,11 +45,12 @@
         </div>
     </div>
     @endforeach
-    <ul class="pagination pagination-sm m-t-none m-b-none justify-content-center">
-        {!! $all_product->appends(request()->query())->links('pagination::bootstrap-4') !!}
-    </ul>
+    
     
     
 </div><!--features_items-->
+<ul class="pagination pagination-sm m-t-none m-b-none justify-content-center">
+        {!! $all_product->appends(request()->query())->links('pagination::bootstrap-4') !!}
+    </ul>
 
 @endsection

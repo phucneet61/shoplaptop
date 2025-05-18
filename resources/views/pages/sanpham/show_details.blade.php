@@ -78,7 +78,7 @@
             <p><b>Thương hiệu:</b> {{$value->brand_name}}</p>
             <p><b>Danh mục:</b> {{$value->category_name}}</p>
             {{-- <a href=""><img src="{{asset('/public/frontend/images/share.png')}}" class="share img-responsive"  alt="" /></a> --}}
-            <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="" data-action="" data-size="" data-share="true"></div>
+            {{-- <div class="fb-like" data-href="{{$url_canonical}}" data-width="" data-layout="" data-action="" data-size="" data-share="true"></div> --}}
         </div><!--/product-information-->
     </div>
 </div><!--/product-details-->

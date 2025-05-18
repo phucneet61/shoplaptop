@@ -30,7 +30,7 @@ class CategoryProduct extends Controller
     public function add_category_product(){
         $this->AuthLogin();
         $category = CategoryProductModel::where('category_parent',0)->orderBy('category_id','desc')->get();
-        return view('admin.add_category_product')
+        return view('admin.category.add_category_product')
         ->with(compact('category'));
     }
     public function all_category_product(){
@@ -38,11 +38,11 @@ class CategoryProduct extends Controller
         $category_post = CatePost::all();
         $category_product = CategoryProductModel::where('category_parent',0)->orderBy('category_id','desc')->get();
         $all_category_product = DB::table('tbl_category_product')->orderBy('category_id','desc')->get();
-        $manager_category_product = view('admin.all_category_product')
+        $manager_category_product = view('admin.category.all_category_product')
         ->with('all_category_product',$all_category_product)
         ->with('category_product',$category_product);
         return view('admin_layout')
-        ->with('admin.all_category_product',$manager_category_product)
+        ->with('admin.category.all_category_product',$manager_category_product)
         ->with('category_post',$category_post);
     }
     public function save_category_product(Request $request){
@@ -75,10 +75,10 @@ class CategoryProduct extends Controller
         $this->AuthLogin();
         $category = CategoryProductModel::orderBy('category_id','desc')->get();
         $edit_category_product = DB::table('tbl_category_product')->where('category_id',$category_product_id)->get();
-        $manager_category_product = view('admin.edit_category_product')
+        $manager_category_product = view('admin.category.edit_category_product')
         ->with('edit_category_product',$edit_category_product)
         ->with('category',$category);
-        return view('admin_layout')->with('admin.edit_category_product',$manager_category_product);
+        return view('admin_layout')->with('admin.category.edit_category_product',$manager_category_product);
     }
     public function update_category_product(Request $request,$category_product_id){
         $this->AuthLogin();

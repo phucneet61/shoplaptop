@@ -32,7 +32,7 @@ class ProductController extends Controller
         $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
         
-        return view('admin.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
+        return view('admin.product.add_product')->with('cate_product', $cate_product)->with('brand_product', $brand_product);
     }
     public function all_product(){
         $this->AuthLogin();
@@ -40,8 +40,8 @@ class ProductController extends Controller
         ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
         ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')
         ->orderby('tbl_product.product_id','desc')->get();
-        $manager_product = view('admin.all_product')->with('all_product',$all_product);
-        return view('admin_layout')->with('admin.all_product',$manager_product);
+        $manager_product = view('admin.product.all_product')->with('all_product',$all_product);
+        return view('admin_layout')->with('admin.product.all_product',$manager_product);
     }
     public function save_product(Request $request) {
         $this->AuthLogin();
@@ -95,10 +95,10 @@ class ProductController extends Controller
         $cate_product = DB::table('tbl_category_product')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->orderby('brand_id','desc')->get();
         $edit_product = DB::table('tbl_product')->where('product_id',$product_id)->get();
-        $manager_product = view('admin.edit_product')->with('edit_product',$edit_product)
+        $manager_product = view('admin.product.edit_product')->with('edit_product',$edit_product)
         ->with('cate_product',$cate_product)
         ->with('brand_product', $brand_product);
-        return view('admin_layout')->with('admin.edit_product',$manager_product);
+        return view('admin_layout')->with('admin.product.edit_product',$manager_product);
     }
     public function update_product(Request $request,$product_id){
         $this->AuthLogin();

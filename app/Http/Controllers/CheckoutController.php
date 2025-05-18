@@ -384,7 +384,7 @@ class CheckoutController extends Controller
     }
     public function delete_order($orderId){
         DB::table('tbl_order')->where('order_id',$orderId)->delete();
-        DB::table('tbl_order_details')->where('order_id',$orderId)->delete();
+        DB::table('tbl_order_details')->where('order_details_id',$orderId)->delete();
         Session::put('message','Xóa đơn hàng thành công');
         return Redirect::to('/manage-order');
     }
