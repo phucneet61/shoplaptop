@@ -67,7 +67,7 @@ class CheckoutController extends Controller
         $data = $request->all();
         $code_cart = rand(0, 9999); //Mã đơn hàng
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "http://localhost/shop-laptop_laravel_9/checkout";
+        $vnp_Returnurl = "http://localhost/shop-laptop_laravel_9/vnpay-return";
         $vnp_TmnCode = "MBRQ9A0D";//Mã website tại VNPAY 
         $vnp_HashSecret = "78MYQ72GA19CO06ME960JH6ALWT5IYYP"; //Chuỗi bí mật
         
@@ -127,22 +127,71 @@ class CheckoutController extends Controller
             $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//  
             $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
         }
-        $returnData = array('code' => '00'
-            , 'message' => 'success'
-            , 'data' => $vnp_Url);
-            if (isset($_POST['redirect'])) {
-                header('Location: ' . $vnp_Url);
-                die();
-            } else {
-                echo json_encode($returnData);
-            }
-            // vui lòng tham khảo thêm tại code demo
+        // $returnData = array('code' => '00'
+        //     , 'message' => 'success'
+        //     , 'data' => $vnp_Url);
+        //     if (isset($_POST['redirect'])) {
+        //         header('Location: ' . $vnp_Url);
+        //         die();
+        //     } else {
+        //         echo json_encode($returnData);
+        //     }
+        //     // vui lòng tham khảo thêm tại code demo
+
+        return response()->json([
+            'code' => '00',
+            'message' => 'success',
+            'data' => $vnp_Url // URL thanh toán VNPAY đã tạo
+        ]);
+
+        // Thẻ test:
+        //Ngân hàng: NCB
+        //Số thẻ: 9704198526191432198
+        //Tên chủ thẻ:NGUYEN VAN A
+        //Ngày phát hành:07/15
+        //Mật khẩu OTP:123456
+
+            
+    }
+    public function vnpay_return(Request $request) {
+        $vnp_ResponseCode = $request->get('vnp_ResponseCode'); // Mã phản hồi từ VNPAY
+        $vnp_TxnRef = $request->get('vnp_TxnRef'); // Mã đơn hàng
+        $vnp_Amount = $request->get('vnp_Amount') / 100; // Số tiền thanh toán (đã chia lại cho 100)
+
+        if ($vnp_ResponseCode == "00") {
+            // Thanh toán thành công
+            Session::put('message', 'Thanh toán thành công!');
+            return redirect('/transaction-cash'); // Chuyển hướng sang trang handcash
+        } else {
+            // Thanh toán thất bại
+            Session::put('error', 'Thanh toán không thành công. Vui lòng thử lại!');
+            return redirect('/checkout'); // Quay lại trang thanh toán
+        }
     }
     public function hand_cash(Request $request){
         $category_post = CatePost::all();
         $meta_desc = "Laptop Minh Quân - Trang web mua sắm hàng đầu Việt Nam";
         $meta_keywords = "Laptop Minh Quân, mua hàng online, mua hàng trực tuyến";
         $meta_title = "Thanh toán bằng tiền mặt - Laptop Minh Quân";
+        $url_canonical = $request->url();
+        $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
+        $brand_product = DB::table('tbl_brand_product')->where('brand_status','1')->orderby('brand_id','desc')->get();
+        $slider = Slider::orderBy('slider_id','desc')->where('slider_status','1')->take(4)->get();
+        return view('pages.checkout.handcash')->with('meta_desc',$meta_desc)
+        ->with('category', $cate_product)
+        ->with('brand', $brand_product)
+        ->with('slider',$slider)
+        ->with('meta_desc',$meta_desc)
+        ->with('meta_keywords',$meta_keywords)
+        ->with('meta_title',$meta_title)
+        ->with('url_canonical',$url_canonical)
+        ->with('category_post',$category_post);
+    }
+    public function transaction_cash(Request $request){
+        $category_post = CatePost::all();
+        $meta_desc = "Laptop Minh Quân - Trang web mua sắm hàng đầu Việt Nam";
+        $meta_keywords = "Laptop Minh Quân, mua hàng online, mua hàng trực tuyến";
+        $meta_title = "Thanh toán chuyển khoản thành công - Laptop Minh Quân";
         $url_canonical = $request->url();
         $cate_product = DB::table('tbl_category_product')->where('category_status','1')->orderby('category_id','desc')->get();
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','1')->orderby('brand_id','desc')->get();

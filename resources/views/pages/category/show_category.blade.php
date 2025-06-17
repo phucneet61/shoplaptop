@@ -39,7 +39,7 @@
     
     
 </div><!--features_items-->
-{{-- <ul class="pagination pagination-sm m-t-none m-b-none justify-content-center">
+<ul class="pagination pagination-sm m-t-none m-b-none justify-content-center">
     {!! $category_by_id->appends(request()->query())->links('pagination::bootstrap-4') !!}
-</ul> --}}
+</ul>
 @endsection

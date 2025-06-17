@@ -103,7 +103,7 @@ class BrandProduct extends Controller
         $brand_product = DB::table('tbl_brand_product')->where('brand_status','1')->orderby('brand_id','desc')->get();
         $brand_by_id = DB::table('tbl_product')
         ->join('tbl_brand_product','tbl_product.brand_id','=','tbl_brand_product.brand_id')
-        ->where('tbl_product.brand_id',$brand_id)->get();
+        ->where('tbl_product.brand_id',$brand_id)->paginate(6);
         //seo 
         $meta_desc = "";
         $meta_keywords = "";

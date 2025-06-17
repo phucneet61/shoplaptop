@@ -17,8 +17,6 @@ use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VideoController;
-use App\Models\Coupon;
-use App\Models\Slider;
 use Illuminate\Support\Facades\Route;
 //Frontend
 Route::get('/', [HomeController::class, 'index']);
@@ -140,7 +138,7 @@ Route::get('/show-cart', [CartController::class, 'show_cart']);
 Route::get('/delete-to-cart/{rowId}', [CartController::class, 'delete_to_cart']);
 Route::post('/update-cart-quantity', [CartController::class, 'update_cart_quantity']);
 
-//Add to cart ajax
+//Add to cart ajax 
 Route::post('/add-cart-ajax', [CartController::class, 'add_cart_ajax']);
 Route::post('/update-cart-ajax', [CartController::class, 'update_cart_ajax']);
 Route::get('/gio-hang', [CartController::class, 'gio_hang']);
@@ -158,9 +156,11 @@ Route::post('/login-customer', [CheckoutController::class, 'login_customer']);
 Route::post('/order-place', [CheckoutController::class, 'order_place']);
 Route::post('/confirm-order', [CheckoutController::class, 'confirm_order']);
 Route::get('/handcash', [CheckoutController::class, 'hand_cash']);
+Route::get('/transaction-cash', [CheckoutController::class, 'transaction_cash']);
 
 //cong thanh toan chuyen khoan 
 Route::post('/vnpay', [CheckoutController::class, 'vnpay_payment']);
+Route::get('/vnpay-return', [CheckoutController::class, 'vnpay_return']);
 
 
 

@@ -30,4 +30,7 @@
     
     
 </div><!--features_items-->
+<ul class="pagination pagination-sm m-t-none m-b-none justify-content-center">
+    {!! $brand_by_id->appends(request()->query())->links('pagination::bootstrap-4') !!}
+</ul>
 @endsection

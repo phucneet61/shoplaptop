@@ -15,12 +15,7 @@
                         <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ hàng</a>
                     </div>
             </div>
-            <div class="choose">
-                <ul class="nav nav-pills nav-justified">
-                    <li><a href="#"><i class="fa fa-plus-square"></i>Thêm yêu thích</a></li>
-                    <li><a href="#"><i class="fa fa-plus-square"></i>Thêm so sánh</a></li>
-                </ul>
-            </div>
+            
         </div>
     </div>
     @endforeach

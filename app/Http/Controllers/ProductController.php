@@ -49,8 +49,8 @@ class ProductController extends Controller
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
-        $data['product_desc'] = $request->product_desc;
-        $data['product_content'] = $request->product_content;
+        $data['product_desc'] = $request->product_desc ? $request->product_desc : 'Chưa có thông tin về sản phẩm';
+        $data['product_content'] = $request->product_content ? $request->product_content : 'Chưa có thông tin về sản phẩm';
         $data['category_id'] = $request->product_cate; // Thay vì $request->category_id
         $data['brand_id'] = $request->product_brand;
         $data['product_status'] = $request->product_status;
@@ -106,8 +106,8 @@ class ProductController extends Controller
         $data['product_name'] = $request->product_name;
         $data['product_quantity'] = $request->product_quantity;
         $data['product_price'] = $request->product_price;
-        $data['product_desc'] = $request->product_desc;
-        $data['product_content'] = $request->product_content;
+        $data['product_desc'] = $request->product_desc ? $request->product_desc : 'Chưa có thông tin về sản phẩm';
+        $data['product_content'] = $request->product_content ? $request->product_content : 'Chưa có thông tin về sản phẩm';
         $data['category_id'] = $request->product_cate; // Thay vì $request->category_id
         $data['brand_id'] = $request->product_brand;
         $data['product_status'] = $request->product_status;
@@ -171,11 +171,13 @@ class ProductController extends Controller
         //gallery
         $gallery = Gallery::where('product_id',$product_id)->get();
         $related_product = DB::table('tbl_product')
-        ->join('tbl_category_product','tbl_category_product.category_id','=','tbl_product.category_id')
-        ->join('tbl_brand_product','tbl_brand_product.brand_id','=','tbl_product.brand_id')
-        ->where('tbl_category_product.category_id',$category_id)
-        ->whereNotIn('tbl_product.product_id',[$product_id])
-        ->limit(3)->get();
+        ->join('tbl_category_product', 'tbl_category_product.category_id', '=', 'tbl_product.category_id')
+        ->join('tbl_brand_product', 'tbl_brand_product.brand_id', '=', 'tbl_product.brand_id')
+        ->where('tbl_category_product.category_name', 'Laptop Văn Phòng') // Lọc theo danh mục Laptop Văn Phòng
+        ->where('tbl_brand_product.brand_id', $brand_id) // Lọc theo thương hiệu của sản phẩm hiện tại
+        ->whereNotIn('tbl_product.product_id', [$product_id]) // Loại trừ sản phẩm hiện tại
+        ->paginate(3);
+        
         return view('pages.sanpham.show_details')
         ->with('category',$cate_product)
         ->with('brand',$brand_product)

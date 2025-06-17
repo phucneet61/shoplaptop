@@ -24,7 +24,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <body>
 <div class="log-w3">
 <div class="w3layouts-main">
-	<h2>Đăng nhap auth</h2>
+	<h2>Đăng nhập auth</h2>
 	<?php
 	
 	$message = Session::get('message');

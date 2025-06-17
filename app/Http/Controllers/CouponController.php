@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Coupon;
 use Session;
@@ -9,11 +10,21 @@ use Redirect;
 session_start();
 class CouponController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('login-auth')->send();
+        }
+    }
     public function insert_coupon(Request $request)
     {
+        $this->AuthLogin();
         return view('admin.coupon.insert_coupon');
     }
     public function list_coupon(){
+        $this->AuthLogin();
         $coupon = Coupon::all();
         return view('admin.coupon.list_coupon')->with(compact('coupon'));
     }

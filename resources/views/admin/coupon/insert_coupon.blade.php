@@ -23,15 +23,15 @@
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Mã giảm giá</label>
-                            <input type="text" data-validation="length" data-validation-length="min1" data-validation-error-msg="Điền danh mục" class="form-control" name="coupon_code" id="exampleInputEmail1" >
+                            <input type="text" data-validation="length" data-validation-length="min1" data-validation-error-msg="Điền mã giảm giá" class="form-control" name="coupon_code" id="exampleInputEmail1" >
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Số lượng mã </label>
-                            <input type="text" data-validation="length" data-validation-length="min1" data-validation-error-msg="Điền danh mục" class="form-control" name="coupon_time" id="exampleInputEmail1" >
+                            <input type="text" data-validation="length" data-validation-length="min1" data-validation-error-msg="Điền số lượng mã" class="form-control" name="coupon_time" id="exampleInputEmail1" >
                         </div>
                         <div class="form-group">
                             <label for="exampleInputPassword1">Tính năng mã </label>
-                            <select name="coupon_condition" class="form-control input-sm m-bot15">
+                            <select name="coupon_condition" class="form-control input-sm m-bot15" required>
                                 <option value="0">----Chọn----</option>
                                 <option value="1">Giảm theo phần trăm</option>
                                 <option value="2">Giảm theo tiền</option>

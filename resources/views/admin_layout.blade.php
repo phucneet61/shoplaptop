@@ -175,10 +175,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
-                        <span>Vận chuyển</span>
+                        <span>Phí vận chuyển</span>
                     </a>
                     <ul class="sub">
-						<li><a href="{{URL::to('/delivery')}}">Quản lý vận chuyển</a></li>
+						<li><a href="{{URL::to('/delivery')}}">Quản lý phí vận chuyển</a></li>
                         {{-- <li><a href="{{URL::to('/list-coupon')}}">Liệt kê mã giảm giá</a></li> --}}
                     </ul>
                 </li>
@@ -193,7 +193,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       
                     </ul>
                 </li>
-                <li class="sub-menu">
+                {{-- <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
                         <span>Video</span>
@@ -201,7 +201,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
                         <li><a href="{{URL::to('/video')}}">Thêm Video</a></li>
                     </ul>
-                </li>
+                </li> --}}
                 @impersonate
                 <li>
                     <span><a href="{{URL::to('/impersonate-destroy')}}">Dừng chuyển quyền</a></span>

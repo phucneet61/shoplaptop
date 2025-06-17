@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Coupon;
 use App\Models\Product;
+use Auth;
 use Illuminate\Http\Request;
 use App\Models\Shipping;
 use App\Models\Order;
@@ -11,9 +12,18 @@ use App\Models\OrderDetails;
 use App\Models\Feeship;
 use App\Models\Customer;
 
+use Illuminate\Support\Facades\Redirect;
 use PDF;
 class OrderController extends Controller
 {
+    public function AuthLogin(){
+        $admin_id = Auth::id();
+        if($admin_id){
+            return Redirect::to('dashboard');
+        }else{
+            return Redirect::to('admin')->send();
+        }
+    }
     public function update_qty(Request $request) {
         //update order
         $data = $request->all();
@@ -213,6 +223,7 @@ class OrderController extends Controller
         return $output;
     }
     public function view_order($order_code) {
+        $this->AuthLogin();
         // Lấy thông tin đơn hàng
         $order = Order::where('order_code', $order_code)->get();
         
@@ -259,6 +270,7 @@ class OrderController extends Controller
         ));
     }
     public function manage_order(){
+        $this->AuthLogin();
         $order = Order::orderBy('created_at', 'DESC')->get();
         return view('admin.order.manage_order')->with(compact('order'));
     }
